@@ -1,0 +1,12 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{
+/* background: #E0F7FA; */
+width: 100%;
+height: 100vh;
+}
+*{
+    font-family: 'Poppins','sans-serf';
+}
