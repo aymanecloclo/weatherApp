@@ -16,31 +16,42 @@ function App() {
       setContent(!content);
   }
  
-  useEffect(() => {
-    const fetchData = async () => {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-
-        if (lat && lon) {
-          try {
-            const response = await fetch(`${REACT_APP_API_URL}/weather?lat=${lat}&lon=${lon}&units=metric&APPID=${REACT_APP_API_KEY}`);
-            const data = await response.json();
-            console.log('Fetched Data:', data); // Log data here
-            setResult(data); 
-            // Set result as object, not array
-          } catch (error) {
-            console.error('Error fetching weather data:', error);
-          }
-        } else {
-          console.error("Lat and Long are not available yet.");
-        }
-      });
+ useEffect(() => {
+    const fetchData = async (lat, lon) => {
+      try {
+        const response = await fetch(`${REACT_APP_API_URL}/weather?lat=${lat}&lon=${lon}&units=metric&APPID=${REACT_APP_API_KEY}`);
+        const data = await response.json();
+        console.log('Fetched Data:', data); // Log data here
+        setResult(data);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      
+      }
     };
 
-    fetchData();
-  }, []); // Empty dependency array to run once on component mount
+    if (navigator.geolocation) {
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          console.log("Updated Latitude:", lat); // Log updated latitude
+          console.log("Updated Longitude:", lon); // Log updated longitude
+          fetchData(lat, lon); // Fetch weather data with updated coordinates
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        },
+        { enableHighAccuracy: true } // Request high accuracy
+      );
 
+      // Cleanup function to stop watching position
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+      };
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, []);
   return (
     <>
       <Navbar src={logo_app} onClickSearch={handleChange}/>
