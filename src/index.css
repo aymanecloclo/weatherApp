@@ -2,7 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 body{
 /* background: #E0F7FA; */
 width: 100%;
