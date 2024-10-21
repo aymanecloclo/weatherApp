@@ -30,9 +30,13 @@ const Navbar = ({ src, onClickSearch }) => {
         {/* Desktop Navigation */}
         <ul className='hidden md:flex order-8 items-center gap-2'>
           {navItems.map(item => (
-            <li key={item.id} className='px-4 py-2 m-2 cursor-pointer duration-300 flex items-center text-slate-100 hover:text-gray-700 hover:font-semibold relative text-lg w-fit block'>
-              <Link to={item.path}>{item.text}</Link>
-            </li>
+           <li
+  key={item.id}
+  className='px-4 py-2 m-2 cursor-pointer duration-300 flex items-center text-slate-100  hover:text-gray-700 hover:font-semibold relative text-lg w-fit block after:content-[""] after:absolute after:left-0 after:bottom-0 after:h-[3px] after:bg-yellow-400 after:w-full after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300  '
+>
+  {item.text}
+</li>
+
           ))}
           <li key={"srch_icon"} className='flex items-center cursor-pointer justify-center text-slate-100 hover:text-gray-700'>
             <IoSearch size={20} onClick={onClickSearch} />
