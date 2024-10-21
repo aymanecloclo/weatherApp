@@ -22,7 +22,7 @@ const Navbar = ({ src, onClickSearch }) => {
   return (
     <div className='flex items-center gap-5 mx-0 w-full md:max-h-[9%] bg-sky-400/85 max-h-16 fixed top-0 left-0 overflow-hidden md:pe-20 z-50'>
       {/* Logo */}
-      <Router>
+ 
         <div className="logo w-full px-5">
           <Logo src={src} className='max-w-1/2 rounded-full object-cover max-h-28 block' />
         </div>
@@ -60,11 +60,11 @@ const Navbar = ({ src, onClickSearch }) => {
           </li>
           {navItems.map(item => (
             <li key={item.id} className='p-4 hover:bg-yellow-400/90 duration-300 cursor-pointer text-slate-100 hover:text-gray-700'>
-              <Link to={item.path}>{item.text}</Link>
+              {item.text}
             </li>
           ))}
         </ul>
-      </Router>
+   
     </div>
   );
 };

@@ -14,6 +14,9 @@ import pressureMer from '../assets/images/niveau-de-la-mer.png';
 import nuages from '../assets/images/nuages.png';
 import max_temp from '../assets/images/max_temp.png';
 import min_temp from '../assets/images/min_temp.png';
+import sunny from '../assets/images/sunny.jpg';
+import cold from '../assets/images/cold.jpg';
+import littleSunny from '../assets/images/littleSunny.jpg';
 const WeatherDisplay = ({ dataWeather }) => {
   if (!dataWeather) return <ConnectivityStatus />;
 
@@ -63,7 +66,7 @@ const WeatherDisplay = ({ dataWeather }) => {
     },
     {
       title: 'Température Min',
-      value: main?.temp_min,
+      value: Number(main?.temp_min),
       unit: '°C',
       icon: min_temp , // Icône pour la température minimale si nécessaire
     },
@@ -74,48 +77,63 @@ const WeatherDisplay = ({ dataWeather }) => {
       icon: max_temp, // Icône pour la température maximale si nécessaire
     },
   ];
+  let feelslike=Math.floor(Number(main?.feels_like));
+    feelslike=8;
 
+  const getBackground = (feelsLike ) => {
+    if (feelsLike > 30) {
+      return `url(${sunny })`;
+    } else if (feelsLike > 20) {
+      return `url(${littleSunny})` ;
+    } else if (feelsLike > 10) {
+      return `url(${bgWeather})`;
+    } else {
+      return `url(${cold})`;
+    }
+  };
+  let styleComponent={
+        backgroundImage: getBackground(feelslike),
+        backgroundSize: 'cover',
+        backgroundPosition:'center',
+        height: '100vh !important',
+      }
   return (
     <div
       className="flex pt-24 text-slate-50/85 font-extrabold min-h-screen px-0"
       id="weatherBox mx-0 relative"
-      style={{
-        backgroundImage: `url(${bgWeather})`,
-        backgroundSize: 'cover',
-        height: '100vh !important',
-      }}
+      style={styleComponent}
     >
       {/* Overlay for contrast */}
       <div className="bg-black/5 absolute top-0 left-0 w-full h-48"></div>
 
       <div className="z-20 w-full md:flex flex-col ">
-        <div className="flex justify-between my-2">
+        <div className="flex  my-2">
           {/* City Name and Country */}
-          <h3 className='flex items-center gap-0.5'>
+          <h3 className='flex items-center gap-0.5 px-10 text-2xl'>
             <CiLocationOn size={20} /> {name}, <span>{sys?.country}</span>
           </h3>
           {/* Date */}
-          <p className="date font-medium text-lg">{formattedDate}</p>
+          <p className="date font-medium pe-10 text-2xl ">{formattedDate}</p>
         </div>
 
         <div className="flex-col lg:flex lg:gap-5 lg:px-5 my-20">
-          <div className="flex gap-10 bg-slate-500/45 h-1/12 mx-2 py-5 rounded-md lg:w-5/12 shadow-xl xs:flex-col">
+          <div className="flex gap-10 bg-slate-500/45 h-1/12 mx-2 py-5 rounded-md md:w-[600px] -shadow-xl xs:flex-col ">
             <div className="flex items-center">
               <img
                 src={`https://openweathermap.org/img/wn/${weather[0]?.icon}@2x.png`}
                 alt="Weather Icon"
                 className="w-1/2 object-cover"
               />
-              <h1 className="text-6xl xxs:text-4xl font-light relative">
-                {`${main?.feels_like}`}
+              <h1 className="text-6xl xxs:text-4xl font-extralight relative">
+                {`${Math.floor(Number(main?.feels_like))}`}
                 <span className="absolute -top-2 text-sm">°C</span>
               </h1>
             </div>
 
-            <div className="flex flex-col font-semibold xs:items-center gap-2">
-              <span className="capitalize text-xl xl:text-sm font-bold">{weather[0]?.description}</span>
-              <span className="text-sm">{`Feels like: ${main?.feels_like}°C`}</span>
-              <div className="flex text-sm flex-wrap gap-2">
+            <div className="flex flex-col font-semibold xs:items-center gap-2 ">
+              <span className="capitalize text-xl    ">{weather[0]?.description}</span>
+              <span className="text-sm md:text-xl">{`Feels like: ${main?.feels_like}°C`}</span>
+              <div className="flex text-sm flex-wrap gap-2 md:text-xl">
                 <span>{`Max: ${main?.temp_max}°C`}</span>
                 <span>{`Min: ${main?.temp_min}°C`}</span>
               </div>

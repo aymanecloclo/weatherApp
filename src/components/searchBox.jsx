@@ -10,7 +10,7 @@ const SearchBox = ({ onChange }) => {
   const [catchedValue, setCatchedValue] = useState('');
 
   const fetchCities = async (inputValue) => {
-    if (inputValue.length >0) { // Attendre que l'utilisateur tape au moins 3 lettres
+    if (inputValue.length >1) { // Attendre que l'utilisateur tape au moins 3 lettres
       try {
         const response = await fetch(
           `http://api.openweathermap.org/data/2.5/find?q=${inputValue}&type=like&sort=population&cnt=10&appid=${REACT_APP_API_KEY}`
