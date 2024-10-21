@@ -1,131 +1,138 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import bgWeather from "../assets/images/bg-weatherDisplay.jpg";
 import { CiLocationOn } from "react-icons/ci";
 import ConnectivityStatus from './ConnectivityStatus';
-import speedIcon from '../assets/images/speed_wind.png'
-const WeatherDisplay= ({ dataWeather, }) => {
-  if (!dataWeather) return <ConnectivityStatus/> ;
-const options = { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
-const currentDate = new Date();
-const formattedDate = currentDate.toLocaleString('en-US', options).replace(',', '');
+import speedIcon from '../assets/images/speed_wind.png';
+import CardCarousel from './CardCarousel';
+// Import des icônes
+import pressureIcon from '../assets/images/pressure.png';
+import humidity from '../assets/images/humidity.png';
+import visibilityIcon from '../assets/images/visibility.png';
+import windIcon from '../assets/images/speed_wind.png';
+import pressureMer from '../assets/images/niveau-de-la-mer.png';
+import nuages from '../assets/images/nuages.png';
+import max_temp from '../assets/images/max_temp.png';
+import min_temp from '../assets/images/min_temp.png';
+const WeatherDisplay = ({ dataWeather }) => {
+  if (!dataWeather) return <ConnectivityStatus />;
 
+  const options = { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleString('en-US', options).replace(',', '');
 
-  // Safely access properties
-  const { name, sys, main, wind, visibility} = dataWeather;
-   
+  const { name, sys, main, wind, visibility, weather, clouds } = dataWeather;
+
+  // Tableau de données à afficher dans le carrousel
+  const dataArray = [
+    {
+      title: 'Pression Atmosphérique',
+      value: main?.pressure,
+      unit: 'hPa',
+      icon: pressureIcon, // Icône pour la pression
+    },
+    {
+      title: 'Pression Niveau de la Mer',
+      value: main?.sea_level || 'N/A', // Affiche N/A si la donnée est absente
+      unit: 'hPa',
+      icon: pressureMer,
+    },
+    {
+      title: 'Humidité',
+      value: main?.humidity,
+      unit: '%',
+      icon: humidity, // Icône pour l'humidité
+    },
+    {
+      title: 'Vitesse du vent',
+      value: (wind?.speed * 3.6).toFixed(1), // Conversion en km/h
+      unit: 'km/h',
+      icon: windIcon, // Icône pour la vitesse du vent
+    },
+    {
+      title: 'Visibilité',
+      value: visibility || 'N/A', // Valeur de la visibilité en mètres
+      unit: 'm',
+      icon: visibilityIcon, // Icône pour la visibilité
+    },
+    {
+      title: 'Niveau de nuages',
+      value: clouds?.all || 0, // Niveau de nuages en pourcentage
+      unit: '%',
+      icon: nuages, // Tu peux ajouter une icône ici si tu veux
+    },
+    {
+      title: 'Température Min',
+      value: main?.temp_min,
+      unit: '°C',
+      icon: min_temp , // Icône pour la température minimale si nécessaire
+    },
+    {
+      title: 'Température Max',
+      value: main?.temp_max,
+      unit: '°C',
+      icon: max_temp, // Icône pour la température maximale si nécessaire
+    },
+  ];
+
   return (
-  <div
-  className="flex px-5  pt-24 text-slate-50/85 font-extrabold"
-  id="weatherBox mx-0 relative"
-  style={{
-    backgroundImage: `url(${bgWeather})`,
-    backgroundSize: 'cover',
-    height: '100vh',
-  }}
->
-  {/* Container principal avec les styles pour l'affichage en plein écran */}
-  
-  {/* Div pour fixer le contraste */}
-  <div className="bg-black/5 absolute top-0 left-0 w-full h-48"></div>
+    <div
+      className="flex pt-24 text-slate-50/85 font-extrabold min-h-screen px-0"
+      id="weatherBox mx-0 relative"
+      style={{
+        backgroundImage: `url(${bgWeather})`,
+        backgroundSize: 'cover',
+        height: '100vh !important',
+      }}
+    >
+      {/* Overlay for contrast */}
+      <div className="bg-black/5 absolute top-0 left-0 w-full h-48"></div>
 
-  <div className="z-20 w-full md:flex flex-col    ">
-    {/* Section pour le nom de la ville et la date */}
-    <div className="flex justify-between my-2">
-      {/* Affichage du nom de la ville et du pays */}
-      <h3 className='flex items-center gap-0.5'>
-       <CiLocationOn size={20} /> {name},<span>{sys.country}</span>
-      </h3>
-
-      {/* Affichage de la date formatée */}
-      <p className="date font-medium text-lg">{formattedDate}</p>
-    </div>
-    {/* two section weather card  */}
-    <div className="flex flex-col lg:flex-row lg:gap-5 lg:px-5">
-        <div className="flex gap-10 bg-slate-500/45 h-1/12 mx-2 py-5 rounded-md lg:w-5/12 shadow-xl">
-      {/* Première colonne pour l'image et la température ressentie */}
-          <div className="flex items-center">
-        {/* Image de l'icône météo (à ajouter dans src) */}
-              <img
-                src={`https://openweathermap.org/img/wn/${dataWeather.weather[0].icon}@2x.png`}
-               alt="Weather Icon"
-                className="w-1/2 object-cover"
-               />
-
-        {/* Température ressentie */}
-               <h1 className="text-6xl font-light relative">
-               {`${main.feels_like}`}
-              <span className="absolute -top-2 text-sm">°C</span>
-              </h1>
-      </div>
-
-      {/* Deuxième colonne */}
-      <p className="flex flex-col font-semibold ">
-    
-        {/* Description de la météo */}
-        <span className="text-nowrap capitalize text-xl font-bold">{dataWeather.weather[0].description}</span>
-
-        {/* Température ressentie */}
-        <span className="text-sm">{`T. ressentie ${main.feels_like}`}</span>
-
-        {/* Températures max et min */}
-        <div className="flex text-sm flex-wrap gap-2">
-          <span className="text-nowrap">{`Max : ${main.temp_max} `}</span>
-          <span className="text-nowrap">{`Min : ${main.temp_min} `}</span>
+      <div className="z-20 w-full md:flex flex-col ">
+        <div className="flex justify-between my-2">
+          {/* City Name and Country */}
+          <h3 className='flex items-center gap-0.5'>
+            <CiLocationOn size={20} /> {name}, <span>{sys?.country}</span>
+          </h3>
+          {/* Date */}
+          <p className="date font-medium text-lg">{formattedDate}</p>
         </div>
-      </p>
+
+        <div className="flex-col lg:flex lg:gap-5 lg:px-5 my-20">
+          <div className="flex gap-10 bg-slate-500/45 h-1/12 mx-2 py-5 rounded-md lg:w-5/12 shadow-xl xs:flex-col">
+            <div className="flex items-center">
+              <img
+                src={`https://openweathermap.org/img/wn/${weather[0]?.icon}@2x.png`}
+                alt="Weather Icon"
+                className="w-1/2 object-cover"
+              />
+              <h1 className="text-6xl xxs:text-4xl font-light relative">
+                {`${main?.feels_like}`}
+                <span className="absolute -top-2 text-sm">°C</span>
+              </h1>
+            </div>
+
+            <div className="flex flex-col font-semibold xs:items-center gap-2">
+              <span className="capitalize text-xl xl:text-sm font-bold">{weather[0]?.description}</span>
+              <span className="text-sm">{`Feels like: ${main?.feels_like}°C`}</span>
+              <div className="flex text-sm flex-wrap gap-2">
+                <span>{`Max: ${main?.temp_max}°C`}</span>
+                <span>{`Min: ${main?.temp_min}°C`}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Carrousel de cartes météo */}
+         
+        </div>
+         <CardCarousel cards={dataArray} />
+      </div>
     </div>
-     <p className="flex flex-col  gap items-center pt-5 ">
-      {/* Vitesse et direction du vent */}
-   
-        
-       
-<div
-  class=" w-5/12 duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  h-72 dark:bg-[#22272B] rounded-3xl p-4 hover:w-6/12 hover:bg-slate-500/60 hover:dark:bg-[#0C66E4]"
->
-  {/* speed wind card */}
-  
-  <div class="gap-4 relative flex flex-col  justify-center items-center  ">
-    <h3 class=" text-xl text-center">Speed</h3>
-   <img src={speedIcon} alt="" className='w-full h-  object-cover' />
-   
-  </div>
-  <div class="absolute duration-300 -left-32 mt-2 group-hover:left-10 ">
-    <p class="text-sm">{`Speed: ${wind.speed} m/s,`}</p>
-    <p class="text-sm">{`Degree: ${wind.deg}°`}</p>
-  </div>
-</div>
-
-  
-
-
-      {/* Pression atmosphérique */}
-      <span>{`${main.pressure} hPa`}</span>
-
-      {/* Point de rosée */}
-      <span>{`Dew point: ${main.dew_point}°C`}</span>
-
-      {/* Visibilité */}
-      <span>{`Visibility: ${visibility / 1000} km`}</span>
-
-      {/* Humidité */}
-      <span>{`Humidity: ${main.humidity}%`}</span>
-    </p>
-    </div>
-    {/* Section pour l'affichage principal de la météo */}
-
-
-    {/* Section pour les informations supplémentaires sur la météo */}
-   
-  </div>
-  </div>
-
-
   );
 };
 
 WeatherDisplay.propTypes = {
-  dataWeather: PropTypes.object
+  dataWeather: PropTypes.object,
 };
 
 export default WeatherDisplay;
