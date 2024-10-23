@@ -78,10 +78,9 @@ const WeatherDisplay = ({ dataWeather }) => {
     },
   ];
   let feelslike=Math.floor(Number(main?.feels_like));
-    feelslike=8;
-
+  
   const getBackground = (feelsLike ) => {
-    if (feelsLike > 30) {
+    if (feelsLike >= 29) {
       return `url(${sunny })`;
     } else if (feelsLike > 20) {
       return `url(${littleSunny})` ;

@@ -23,16 +23,16 @@ const Navbar = ({ src, onClickSearch }) => {
     <div className='flex items-center gap-5 mx-0 w-full md:max-h-[9%] bg-sky-400/85 max-h-16 fixed top-0 left-0 overflow-hidden md:pe-20 z-50'>
       {/* Logo */}
  
-        <div className="logo w-full px-5">
+        <div className="logo w-full px-5 md:hidden lg:block">
           <Logo src={src} className='max-w-1/2 rounded-full object-cover max-h-28 block' />
         </div>
 
         {/* Desktop Navigation */}
-        <ul className='hidden md:flex order-8 items-center gap-2'>
+        <ul className='hidden md:flex  order-8 items-center justify-center gap-2'>
           {navItems.map(item => (
            <li
   key={item.id}
-  className='px-4 py-2 m-2 cursor-pointer duration-300 flex items-center text-slate-100  hover:text-gray-700 hover:font-semibold relative text-lg w-fit block after:content-[""] after:absolute after:left-0 after:bottom-0 after:h-[3px] after:bg-yellow-400 after:w-full after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300  '
+  className='px-4 py-2 m-2 cursor-pointer duration-300 flex items-center text-slate-100  hover:text-gray-700 hover:font-semibold relative text-lg w-fit  after:content-[""] after:absolute after:left-0 after:bottom-0 after:h-[3px] after:bg-yellow-400 after:w-full after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300  '
 >
   {item.text}
 </li>
@@ -59,7 +59,7 @@ const Navbar = ({ src, onClickSearch }) => {
             <AiOutlineClose onClick={handleNav} size={25} className='text-slate-100 absolute top-1 right-2 cursor-pointer' />
           </li>
           {navItems.map(item => (
-            <li key={item.id} className='p-4 hover:bg-yellow-400/90 duration-300 cursor-pointer text-slate-100 hover:text-gray-700'>
+            <li key={item.id} className='px-4 py-2 m-2 cursor-pointer duration-300 flex items-center text-slate-100  hover:text-gray-700 hover:font-semibold relative text-lg w-fit  after:content-[""] after:absolute after:left-0 after:bottom-0 after:h-[3px] after:bg-yellow-400 after:w-full after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300 '>
               {item.text}
             </li>
           ))}

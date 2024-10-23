@@ -3,14 +3,14 @@ import Search from './Search';
 import CloseBtn from './CloseBtn';
 import { CiLocationOn } from "react-icons/ci";
 
-const SearchBox = ({ onChange }) => {
+const SearchBox = ({ onChange,catchValue }) => {
   const [city, setCity] = useState('');
   const [filteredCities, setFilteredCities] = useState([]);
   const REACT_APP_API_KEY = '7ab4338a56030b82d25ba8a78b578696';
-  const [catchedValue, setCatchedValue] = useState('');
+
 
   const fetchCities = async (inputValue) => {
-    if (inputValue.length >1) { // Attendre que l'utilisateur tape au moins 3 lettres
+    if (inputValue.length >2) { 
       try {
         const response = await fetch(
           `http://api.openweathermap.org/data/2.5/find?q=${inputValue}&type=like&sort=population&cnt=10&appid=${REACT_APP_API_KEY}`
@@ -45,12 +45,6 @@ const SearchBox = ({ onChange }) => {
     setCity(inputValue); // Mettre à jour la ville
   };
 
-  const catchValue = (e) => {
-    const catchValue = e.target.innerText;
-    setCatchedValue(catchValue);
-    console.log(`catchedValue ${catchValue}`);
-  };
-
   return (
     <div className='flex justify-center'>
       <div className="absolute w-full lg:w-9/12 lg:top-[5%] bg-white min-screen z-50 flex flex-col rounded-lg h-screen lg:max-h-[80%]  border shadow-md">
@@ -62,7 +56,7 @@ const SearchBox = ({ onChange }) => {
           <li className='bg-sky-400 py-2 text-slate-50 ps-2'>EMPLACEMENTS</li>
           {filteredCities.length > 0 ? (
             filteredCities.map((cityDetails, index) => (
-              <li key={index} onClick={catchValue} className='py-2 w-11/12 border-b-2 cursor-pointer text-sm px-2 flex gap-1 items-center'>
+              <li key={index} onClick={(e)=>catchValue(e)} className='py-2 w-11/12 border-b-2 cursor-pointer text-sm px-2 flex gap-1 items-center'>
                 <CiLocationOn />
                 {`${cityDetails.name}, ${cityDetails.country}`}
               </li>
