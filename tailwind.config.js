@@ -5,12 +5,7 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      screens: {
-        'xs': {'max': '490px'},
-        'xxs': {'max': '400px'},    
-      },
-    },
+    extend: {},
   },
   plugins: [
     require('daisyui'),

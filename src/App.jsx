@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import logo_app from './assets/images/logoApp.png';
 import WeatherDisplay from './components/WeatherDisplay'; 
 import SearchBox from './components/SearchBox';
-import Footer from './components/Footer';
+
 function App() {
   const [value, setValue] = useState("");
   const [result, setResult] = useState(null); // Initialize as null
@@ -80,7 +80,7 @@ const fetchData = async (lat, lon, cityName) => {
       {content? <SearchBox catchValue={catchValue} content={content} onChange={handleChange}/>:null} 
       {/* Ensure dataWeather is an object */}
        <WeatherDisplay dataWeather={result}  />
-       <Footer/>
+    
  
     </>
   );
