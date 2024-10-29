@@ -3,7 +3,7 @@ import Search from './Search';
 import CloseBtn from './CloseBtn';
 import { CiLocationOn } from "react-icons/ci";
 
-const SearchBox  = ({ onChange,catchValue }) => {
+const SearchBox = ({ onChange,catchValue }) => {
   const [city, setCity] = useState('');
   const [filteredCities, setFilteredCities] = useState([]);
   const REACT_APP_API_KEY = '7ab4338a56030b82d25ba8a78b578696';
