@@ -13,7 +13,7 @@ const SearchBox = ({ onChange,catchValue }) => {
     if (inputValue.length >2) { 
       try {
         const response = await fetch(
-          `http://api.openweathermap.org/data/2.5/find?q=${inputValue}&type=like&sort=population&cnt=10&appid=${REACT_APP_API_KEY}`
+          `https://api.openweathermap.org/data/2.5/find?q=${inputValue}&type=like&sort=population&cnt=10&appid=${REACT_APP_API_KEY}`
         );
         const data = await response.json();
         console.log("Data fetched:", data);

@@ -4,7 +4,8 @@ import Search from './components/Search';
 import Navbar from './components/Navbar';
 import logo_app from './assets/images/logoApp.png';
 import WeatherDisplay from './components/WeatherDisplay'; 
-import SearchBox from './components/SearchBox.jsx'; // Assurez-vous que ce chemin est correct
+import SearchBox from './components/SearchBox.jsx';
+// Assurez-vous que ce chemin est correct
 import Footer from './components/Footer';
 
 function App() {
