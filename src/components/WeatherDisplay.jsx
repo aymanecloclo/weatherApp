@@ -17,6 +17,8 @@ import min_temp from '../assets/images/min_temp.png';
 import sunny from '../assets/images/sunny.jpg';
 import cold from '../assets/images/cold.jpg';
 import littleSunny from '../assets/images/littleSunny.jpg';
+import sunrise from '../assets/images/sunrise.png';
+import sunset from '../assets/images/sunset.png';
 const WeatherDisplay = ({ dataWeather }) => {
   if (!dataWeather) return <ConnectivityStatus />;
 
@@ -25,8 +27,13 @@ const WeatherDisplay = ({ dataWeather }) => {
   const formattedDate = currentDate.toLocaleString('en-US', options).replace(',', '');
 
   const { name, sys, main, wind, visibility, weather, clouds } = dataWeather;
+ // Convertir les timestamps de lever et coucher de soleil en objets Date
+  const sunriseDate = new Date(sys.sunrise * 1000); // Multiplier par 1000 pour convertir en millisecondes
+  const sunsetDate = new Date(sys.sunset * 1000);
 
-  // Tableau de données à afficher dans le carrousel
+const formattedSunrise = sunriseDate.toLocaleTimeString('fr-FR', { timeZone: 'Africa/Casablanca', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Africa/Casablanca', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
   const dataArray = [
     {
       title: 'Pression Atmosphérique',
@@ -115,8 +122,8 @@ const WeatherDisplay = ({ dataWeather }) => {
           <p className="date font-medium pe-10 text-2xl ">{formattedDate}</p>
         </div>
 
-        <div className="flex-col lg:flex lg:gap-5 lg:px-5 my-20">
-          <div className="flex gap-10 bg-slate-500/45 h-1/12 mx-2 py-5 rounded-md md:w-[600px] -shadow-xl xs:flex-col ">
+        <div className="flex-col lg:flex lg:flex-row lg:justify-between lg:pe-32 lg:ps-10 my-20">
+          <div className="flex gap-10 bg-slate-500/45 h-1/12 mx-2 py-5 rounded-lg md:w-[600px] -shadow-xl xs:flex-col ">
             <div className="flex items-center">
               <img
                 src={`https://openweathermap.org/img/wn/${weather[0]?.icon}@2x.png`}
@@ -138,6 +145,36 @@ const WeatherDisplay = ({ dataWeather }) => {
               </div>
             </div>
           </div>
+ <div className="flex   gap-10">
+<div
+  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-blue-400 "
+>
+  <h3 className="text-xl text-center">Sunset</h3>
+  {/* sunrise ui */}
+  <div className="gap-4 relative ">
+     <img src={sunset} className='w-20 h-20 block mx-auto' alt="" />
+   
+  </div>
+  <div className="absolute duration-300 -left-32 mt-2 group-hover:left-10 flex items-center py-5">
+    <p className="text-xl">{formattedSunrise}</p>
+    
+  </div>
+</div>
+<div
+  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-blue-400 "
+>
+  <h3 className="text-xl text-center">Sunrise</h3>
+  {/* sunrise ui */}
+  <div className="gap-4 relative ">
+     <img src={sunrise} className='w-20 h-20 block mx-auto' alt="" />
+   
+  </div>
+  <div className="absolute duration-300 -left-32 mt-2 group-hover:left-10 flex items-center py-5">
+    <p className="text-xl">{formattedSunrise}</p>
+    
+  </div>
+</div>
+</div>  
 
           {/* Carrousel de cartes météo */}
          
