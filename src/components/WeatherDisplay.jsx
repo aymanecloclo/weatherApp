@@ -145,9 +145,9 @@ const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Afri
               </div>
             </div>
           </div>
- <div className="flex   gap-10">
+ <div className="lg:flex  flex-col lg:flex-row gap-10">
 <div
-  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-blue-400 "
+  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  lg:w-28 lg:h-48 w-3/4 gap-5 rounded-3xl p-4 hover:w-48 hover:bg-blue-400 "
 >
   <h3 className="text-xl text-center">Sunset</h3>
   {/* sunrise ui */}
