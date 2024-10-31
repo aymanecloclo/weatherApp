@@ -3,10 +3,10 @@ import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { IoSearch } from "react-icons/io5";
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import Logo from './Logo';
-
+import { useWeather } from './ProviderWeather';
 const Navbar = ({ src, onClickSearch }) => {
   const [nav, setNav] = useState(false);
-
+       const {handlechange}=useWeather();
   const handleNav = () => {
     setNav(!nav);
   };
@@ -48,7 +48,7 @@ const Navbar = ({ src, onClickSearch }) => {
           {nav ? null : (
             <>
               <AiOutlineMenu size={25} className='text-slate-100 cursor-pointer hover:text-gray-200' />
-              <IoSearch size={25} onClick={onClickSearch} className='text-slate-100 cursor-pointer hover:text-gray-200' />
+              <IoSearch size={25} onClick={handlechange} className='text-slate-100 cursor-pointer hover:text-gray-200' />
             </>
           )}
         </div>

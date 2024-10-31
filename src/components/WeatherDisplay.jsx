@@ -86,19 +86,9 @@ const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Afri
   ];
   let feelslike=Math.floor(Number(main?.feels_like));
   
-  const getBackground = (feelsLike ) => {
-    if (feelsLike >= 29) {
-      return `url(${sunny })`;
-    } else if (feelsLike > 20) {
-      return `url(${littleSunny})` ;
-    } else if (feelsLike > 10) {
-      return `url(${bgWeather})`;
-    } else {
-      return `url(${cold})`;
-    }
-  };
+ 
   let styleComponent={
-        backgroundImage: getBackground(feelslike),
+        backgroundImage:`url(${sunny })`,
         backgroundSize: 'cover',
         backgroundPosition:'center',
         height: '100vh !important',
@@ -113,17 +103,17 @@ const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Afri
       <div className="bg-black/5 absolute top-0 left-0 w-full h-48"></div>
 
       <div className="z-20 w-full md:flex flex-col ">
-        <div className="flex  my-2">
+        <div className="flex sm:flex-row xs:flex-col my-2">
           {/* City Name and Country */}
-          <h3 className='flex items-center gap-0.5 px-10 text-2xl'>
+          <h3 className='flex items-center gap-0.5 xs:px-2 px-10 text-2xl'>
             <CiLocationOn size={20} /> {name}, <span>{sys?.country}</span>
           </h3>
           {/* Date */}
-          <p className="date font-medium pe-10 text-2xl ">{formattedDate}</p>
+          <p className="date font-medium pe-10 sm:text-2xl text-nowrap text-lg xs:px-3 ">{formattedDate}</p>
         </div>
 
         <div className="flex-col lg:flex lg:flex-row lg:justify-between lg:pe-32 lg:ps-10 my-20">
-          <div className="flex gap-10 bg-slate-500/45 h-1/12 mx-2 py-5 rounded-lg md:w-[600px] -shadow-xl xs:flex-col ">
+          <div className="flex gap-10 bg-slate-500/45 h-1/12 mx-2 py-5 rounded-lg md:w-[600px] -shadow-xl xs:flex ">
             <div className="flex items-center">
               <img
                 src={`https://openweathermap.org/img/wn/${weather[0]?.icon}@2x.png`}
@@ -145,9 +135,9 @@ const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Afri
               </div>
             </div>
           </div>
- <div className="lg:flex  flex-col lg:flex-row gap-10">
+ <div className="lg:flex  flex-col flex items-center p-5  lg:flex-row gap-10">
 <div
-  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  lg:w-28 lg:h-48 w-3/4 gap-5 rounded-3xl p-4 hover:w-48 hover:bg-blue-400 "
+  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-sky-400/95 "
 >
   <h3 className="text-xl text-center">Sunset</h3>
   {/* sunrise ui */}
@@ -161,7 +151,7 @@ const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Afri
   </div>
 </div>
 <div
-  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-blue-400 "
+  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-sky-400/95 "
 >
   <h3 className="text-xl text-center">Sunrise</h3>
   {/* sunrise ui */}

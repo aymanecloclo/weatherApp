@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Search from './Search';
 import CloseBtn from './CloseBtn';
 import { CiLocationOn } from "react-icons/ci";
-
-const SearchBox = ({ onChange,catchValue }) => {
+import { useWeather } from './ProviderWeather';
+const SearchBox = () => {
   const [city, setCity] = useState('');
   const [filteredCities, setFilteredCities] = useState([]);
   const REACT_APP_API_KEY = '7ab4338a56030b82d25ba8a78b578696';
-
+  const  {onChange,catchValue,content}=useWeather();
 
   const fetchCities = async (inputValue) => {
-    if (inputValue.length >2) { 
+    if (inputValue.length >0) { 
       try {
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/find?q=${inputValue}&type=like&sort=population&cnt=10&appid=${REACT_APP_API_KEY}`
