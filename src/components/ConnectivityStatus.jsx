@@ -27,14 +27,14 @@ const ConnectivityStatus = () => {
       className="flex justify-center items-center min-h-screen"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }} // Reduced duration for faster loading
+      transition={{ duration: 0.3 }}
     >
       {isOnline ? (
         <motion.p
           className="text-green-500 text-lg"
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 0.5 }} // Keep scale transition smooth
+          transition={{ duration: 0.5 }}
         >
           You are Online 🎉
         </motion.p>
@@ -52,9 +52,25 @@ const ConnectivityStatus = () => {
   );
 };
 
-// Using Suspense to defer the rendering of ConnectivityStatus for better UX
+// Loader component
+const Loader = () => (
+  <motion.div
+    className="flex justify-center items-center min-h-screen"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1, rotate: 360 }}
+    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+  >
+    <motion.div
+      className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"
+      animate={{ rotate: 360 }}
+      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+    />
+  </motion.div>
+);
+
+// Using Suspense to defer the rendering of ConnectivityStatus with a loader
 const App = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<Loader />}>
     <ConnectivityStatus />
   </Suspense>
 );

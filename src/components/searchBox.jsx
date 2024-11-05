@@ -7,7 +7,7 @@ const SearchBox = () => {
   const [city, setCity] = useState('');
   const [filteredCities, setFilteredCities] = useState([]);
   const REACT_APP_API_KEY = '7ab4338a56030b82d25ba8a78b578696';
-  const  {onChange,catchValue,content}=useWeather();
+  const  {handleChange,catchValue,content}=useWeather();
 
   const fetchCities = async (inputValue) => {
     if (inputValue.length >0) { 
@@ -47,8 +47,8 @@ const SearchBox = () => {
 
   return (
     <div className='flex justify-center'>
-      <div className="absolute w-full lg:w-9/12 lg:top-[5%] bg-white min-screen z-50 flex flex-col rounded-lg h-screen lg:max-h-[80%]  border shadow-md">
-        <CloseBtn onChange={onChange} />
+      <div className="fixed w-full lg:w-9/12 lg:top-[5%] bg-white min-screen z-50 flex flex-col rounded-lg h-screen lg:max-h-[80%]  border shadow-md">
+        <CloseBtn onChange={handleChange} />
         <h3 className='mt-12 mb-2 ms-5 font-medium lg:text-sm'>Rechercher votre prévision météo</h3>
         <Search handleInputChange={handleInputChange} city={city} />
 

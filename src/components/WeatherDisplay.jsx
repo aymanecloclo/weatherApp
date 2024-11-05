@@ -19,6 +19,9 @@ import cold from '../assets/images/cold.jpg';
 import littleSunny from '../assets/images/littleSunny.jpg';
 import sunrise from '../assets/images/sunrise.png';
 import sunset from '../assets/images/sunset.png';
+import AirPollution from './AirPollution.jsx';
+import Geocode from './Geocode.jsx';
+import WeatherWidget from './WeatherWidget.jsx';
 const WeatherDisplay = ({ dataWeather }) => {
   if (!dataWeather) return <ConnectivityStatus />;
 
@@ -102,23 +105,23 @@ const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Afri
       {/* Overlay for contrast */}
       <div className="bg-black/5 absolute top-0 left-0 w-full h-48"></div>
 
-      <div className="z-20 w-full md:flex flex-col ">
+      <div className="z-20 w-full md:flex flex-col m ">
         <div className="flex sm:flex-row xs:flex-col my-2">
           {/* City Name and Country */}
           <h3 className='flex items-center gap-0.5 xs:px-2 px-10 text-2xl'>
             <CiLocationOn size={20} /> {name}, <span>{sys?.country}</span>
           </h3>
           {/* Date */}
-          <p className="date font-medium pe-10 sm:text-2xl text-nowrap text-lg xs:px-3 ">{formattedDate}</p>
+          <p className="date font-medium pe-10 sm:text-2xl text-nowrap text-lg xs:px-5 ">{formattedDate}</p>
         </div>
-
-        <div className="flex-col lg:flex lg:flex-row lg:justify-between lg:pe-32 lg:ps-10 my-20">
-          <div className="flex gap-10 bg-slate-500/45 h-1/12 mx-2 py-5 rounded-lg md:w-[600px] -shadow-xl xs:flex ">
+         {/* current weather */}
+        <div className="flex-col lg:flex lg:flex-row lg:justify-between lg:items-center lg:pe-32 lg:ps-10 mt-5">
+          <div className="flex gap-10  bg-gradient-to-r from-cyan-400/85 to-blue-400/85   h-[165px] mx-2 py-5 rounded-lg md:w-[600px] -shadow-xl xs:flex ">
             <div className="flex items-center">
               <img
                 src={`https://openweathermap.org/img/wn/${weather[0]?.icon}@2x.png`}
                 alt="Weather Icon"
-                className="w-1/2 object-cover"
+                className=" object-cover"
               />
               <h1 className="text-6xl xxs:text-4xl font-extralight relative">
                 {`${Math.floor(Number(main?.feels_like))}`}
@@ -135,9 +138,15 @@ const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Afri
               </div>
             </div>
           </div>
- <div className="lg:flex  flex-col flex items-center p-5  lg:flex-row gap-10">
+
+          {/* Carrousel de cartes météo */}
+        
+        </div>
+       
+          <div className=" ps-10 lg:flex  flex-col flex items-center p-5  lg:flex-row gap-10 lg:gap-24">
+
 <div
-  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-sky-400/95 "
+  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-gradient-to-r from-cyan-400/75 to-blue-400 w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-sky-400/95 "
 >
   <h3 className="text-xl text-center">Sunset</h3>
   {/* sunrise ui */}
@@ -151,7 +160,7 @@ const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Afri
   </div>
 </div>
 <div
-  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-slate-500/45  w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-sky-400/95 "
+  className="duration-300 font-mono text-white group cursor-pointer relative overflow-hidden bg-gradient-to-r from-cyan-400/75 to-blue-400  w-28 h-48  rounded-3xl p-4 hover:w-48 hover:bg-sky-400/95 "
 >
   <h3 className="text-xl text-center">Sunrise</h3>
   {/* sunrise ui */}
@@ -165,10 +174,13 @@ const formattedSunset = sunsetDate.toLocaleTimeString('fr-FR', { timeZone: 'Afri
   </div>
 </div>
 </div>  
+<div className="flex -z-10">
+           <Geocode/>
+           {/* <WeatherWidget/> */}
+           <AirPollution  />
 
-          {/* Carrousel de cartes météo */}
-         
-        </div>
+          </div>    
+     
          <CardCarousel cards={dataArray} />
       </div>
     </div>
